@@ -13,9 +13,7 @@ namespace Menu
 		}
 		else if (vertical == VerticalAlignment::Center)
 		{
-			const auto halfOverallTextHeight = (textSize.height + textPadding.Top + textPadding.Bottom) / 2.0f;
-			const auto containerVerticalMidpoint = (float)containerSize.height / 2.0f;
-			y = (containerVerticalMidpoint - halfOverallTextHeight) + textPadding.Top;
+			y = ((containerSize.height - textSize.height) / 2.0) - 8.0;
 		}
 
 		float x = textPadding.Left;
@@ -25,9 +23,7 @@ namespace Menu
 		}
 		else if (horizontal == HorizontalAlignment::Center)
 		{
-			const auto halfOverallTextWidth = (textPadding.Left + textSize.width + textPadding.Right) / 2.0f;
-			const auto containerHorizontalMidpoint = (containerSize.width / 2.0f);
-			x = (containerHorizontalMidpoint - halfOverallTextWidth) + textPadding.Left;
+			x = ((containerSize.width - textSize.width) / 2.0f) - 4.0;
 		}
 
 		return sf::Vector2f(overallPosition.x + x, overallPosition.y + y);

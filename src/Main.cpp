@@ -44,10 +44,6 @@ int main()
 	buttonStyle.TextStyle.Font.loadFromFile("C:\\gitrepo\\GameMenu-cpp\\build\\Debug\\sansation.ttf");
 	buttonStyle.TextStyle.FontSize = 18;
 	buttonStyle.TextStyle.HorizAlign = HorizontalAlignment::Center;
-	buttonStyle.TextStyle.Padding.Bottom = 0;
-	buttonStyle.TextStyle.Padding.Left = 0;
-	buttonStyle.TextStyle.Padding.Right = 0;
-	buttonStyle.TextStyle.Padding.Top = 0;
 	buttonStyle.TextStyle.VertAlign = VerticalAlignment::Center;
 	buttonStyle.UnpressedColor = sf::Color::White;
 
@@ -73,9 +69,9 @@ int main()
 		sf::Event windowEvent;
 		while (window.pollEvent(windowEvent))
 		{
-			std::stringstream logMessageStream;
-			logMessageStream << "Event received: " << ConvertEventTypeToString(windowEvent.type) << " | " << ConvertEventDataToString(windowEvent);
-			logger->LogInformation(logMessageStream.str());
+			//std::stringstream logMessageStream;
+			//logMessageStream << "Event received: " << ConvertEventTypeToString(windowEvent.type) << " | " << ConvertEventDataToString(windowEvent);
+			//logger->LogInformation(logMessageStream.str());
 
 			// Handle the closed event here, but pass all other events to the contained controls.
 			if (windowEvent.type == sf::Event::Closed)

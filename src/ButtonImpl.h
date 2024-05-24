@@ -29,7 +29,7 @@ namespace Menu
 		const std::shared_ptr<ISubscriptionManager> onPressedDown_;
 		const std::shared_ptr<ISubscriptionManager> onReleasedUp_;
 
-		std::shared_ptr<ILogger> logger_;
+		//std::shared_ptr<ILogger> logger_;
 		ButtonStyle _style;
 		sf::RectangleShape _buttonBody;
 		sf::Text _buttonText;

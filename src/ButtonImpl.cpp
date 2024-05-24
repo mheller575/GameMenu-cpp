@@ -23,12 +23,11 @@ namespace Menu
 	ButtonImpl::ButtonImpl(const sf::Vector2f& position, const ButtonStyle& config, const std::shared_ptr<ISubscriptionManager>& pressDownSM,
 		const std::shared_ptr<ISubscriptionManager>& releaseSM)
 		: _style(config)
-		, _buttonBody(BuildRectangle(config.ButtonSize, config.UnpressedColor, config.BorderColor, config.ButtonBorderThickness, position))
-		, _buttonText(BuildText(config.Text, config.TextStyle, _buttonBody.getGlobalBounds(), position))
 		, onPressedDown_(pressDownSM)
 		, onReleasedUp_(releaseSM)
 	{
-		logger_ = BuildLogger();
+		_buttonBody = BuildRectangle(config.ButtonSize, config.UnpressedColor, config.BorderColor, config.ButtonBorderThickness, position);
+		_buttonText = BuildText(config.Text, config.TextStyle, _buttonBody.getLocalBounds(), position);
 	}
 
 	ButtonImpl::~ButtonImpl() {}
@@ -46,7 +45,6 @@ namespace Menu
 			sf::Vector2f mouseClickPosition(event.mouseButton.x, event.mouseButton.y);
 			if (_buttonBody.getGlobalBounds().contains(mouseClickPosition))
 			{
-				logger_->LogInformation("Button Pressed!");
 				_buttonBody.setFillColor(_style.PressedColor);
 				onPressedDown_->CallCallbacks();
 			}
@@ -56,9 +54,7 @@ namespace Menu
 			sf::Vector2f mouseClickPosition(event.mouseButton.x, event.mouseButton.y);
 			if (_buttonBody.getGlobalBounds().contains(mouseClickPosition))
 			{
-				logger_->LogInformation("Button Released!");
 				_buttonBody.setFillColor(_style.UnpressedColor);
-				logger_->LogInformation(std::to_string(_buttonBody.getFillColor().toInteger()));
 				onReleasedUp_->CallCallbacks();
 			}
 		}
@@ -77,7 +73,9 @@ namespace Menu
 	sf::Text BuildText(const std::string& text, const TextStyle& style, const sf::FloatRect& containerSize, const sf::Vector2f& overallPosition)
 	{
 		sf::Text sfText(text, style.Font, style.FontSize);
-		sfText.setPosition(GetTextPosition(containerSize, sfText.getGlobalBounds(), style.Padding, style.HorizAlign, style.VertAlign, overallPosition));
+		const auto globalBounds = sfText.getGlobalBounds();
+		const auto textPos = GetTextPosition(containerSize, globalBounds, style.Padding, style.HorizAlign, style.VertAlign, overallPosition);
+		sfText.setPosition(textPos);
 		sfText.setFillColor(style.Color);
 
 		return sfText;
