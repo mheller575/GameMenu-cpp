@@ -25,55 +25,44 @@ namespace Menu
 
 	void ScreenImpl::Open()
 	{
-		sf::RenderWindow window(sf::VideoMode(800, 600), "Sample Menu Example", sf::Style::Close);
-
-		auto lastTime_ms = GetCurrentTime_ms();
-		while (window.isOpen())
+		auto lastDrawTime_ms = 0; // Set to 0 so we draw on first pass through.
+		while (window_->isOpen())
 		{
 			const auto currentTime_ms = GetCurrentTime_ms();
 
-			if (currentTime_ms - lastTime_ms > screenUpdateRate_ms_)
+			if (currentTime_ms - lastDrawTime_ms > screenUpdateRate_ms_)
 			{
 				// Clear the window.
-				window.clear();
+				window_->clear();
 
-				sf::RectangleShape shape(sf::Vector2f(4.0, 4.0));
-				shape.setPosition(sf::Vector2f(4.0, 4.0));
-				shape.setFillColor(sf::Color::Blue);
-
-				window.draw(shape);
-
-				//for (const auto& control : controls_)
-				//{
-				//	control->Draw(window_);
-				//}
+				for (const auto& control : controls_)
+				{
+					control->Draw(window_);
+				}
 
 				// Tell the window to display.
-				window.display();
+				window_->display();
+
+				lastDrawTime_ms = GetCurrentTime_ms();
 			}
 
 			// Poll the events from the window.
 			sf::Event windowEvent;
-			while (window.pollEvent(windowEvent))
+			while (window_->pollEvent(windowEvent))
 			{
 				// Handle the closed event here, but pass all other events to the contained controls.
 				if (windowEvent.type == sf::Event::Closed)
 				{
-					window.close();
+					window_->close();
 				}
 				else
 				{
-					
-
-
-					//for (auto& control : controls_)
-					//{
-					//	control->HandleEvent(windowEvent, window_);
-					//}
+					for (auto& control : controls_)
+					{
+						control->HandleEvent(windowEvent, window_);
+					}
 				}
 			}
-
-			lastTime_ms = GetCurrentTime_ms();
 		}
 	}
 
