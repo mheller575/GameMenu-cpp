@@ -25,9 +25,6 @@ namespace Menu
 		virtual void Close() override;
 
 	private:
-		void WindowHandler();
-		void DisplayHandler(const std::uint64_t& lastTime_ms);
-		void ControlEventHandler();
 		std::uint64_t GetCurrentTime_ms();
 
 		const std::uint32_t screenUpdateRate_ms_;

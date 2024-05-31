@@ -19,7 +19,7 @@ namespace Menu
 			const std::shared_ptr<ISubscriptionManager>& releaseSM);
 		virtual ~ButtonImpl();
 
-		void Draw(sf::RenderTarget* window) const override;
+		void Draw(sf::RenderTarget* window) override;
 		void HandleEvent(const sf::Event& event, sf::RenderTarget* window) override;
 
 		virtual UnsubscribeHandler SubscribeToOnPressedDown(const std::function<void()>& handler) override;

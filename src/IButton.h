@@ -5,7 +5,8 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics.hpp>
 
-#include "CommonText.h"
+#include "CommonStructures.h"
+#include "ITextLabel.h"
 #include "IControl.h"
 #include "SubscriptionManager.h"
 
@@ -34,15 +35,17 @@ namespace Menu
 	{
 		std::string Text;
 
-		TextStyle TextStyle;
+		TextLabelStyle TextStyle;
+
+		HorizontalAlignment TextHorizontalAlignment;
+
+		VerticalAlignment TextVerticalAlignment;
 
 		sf::Color UnpressedColor;
 
 		sf::Color PressedColor;
 
 		sf::Color BorderColor;
-
-		Padding Padding;
 
 		sf::Vector2f ButtonSize;
 

@@ -70,20 +70,6 @@ namespace Menu
 	{
 		notifyThreadClose_ = true;
 	}
-	void ScreenImpl::WindowHandler()
-	{
-		
-	}
-
-	void ScreenImpl::DisplayHandler(const std::uint64_t& lastTime_ms)
-	{
-		
-	}
-
-	void ScreenImpl::ControlEventHandler()
-	{
-		
-	}
 
 	std::uint64_t ScreenImpl::GetCurrentTime_ms()
 	{

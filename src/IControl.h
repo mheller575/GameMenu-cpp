@@ -21,7 +21,7 @@ namespace Menu
 		/// Draws the object on the provided render target.
 		/// </summary>
 		/// <param name="window">Target to draw on.</param>
-		virtual void Draw(sf::RenderTarget* window) const = 0;
+		virtual void Draw(sf::RenderTarget* window) = 0;
 
 		/// <summary>
 		/// Handles a window event applied to the object.

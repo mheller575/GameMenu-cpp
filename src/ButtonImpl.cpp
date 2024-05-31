@@ -1,11 +1,12 @@
 #include "CommonStructures.h"
+#include "CommonText.h"
 #include "IButton.h"
 #include "ILogger.h"
 #include "ButtonImpl.h"
 
 namespace Menu
 {
-	sf::Text BuildText(const std::string& text, const TextStyle& style, const sf::FloatRect& containerSize, const sf::Vector2f& overallPosition);
+	sf::Text BuildText(const std::string& text, const ButtonStyle& style, const sf::FloatRect& containerSize, const sf::Vector2f& overallPosition);
 	sf::RectangleShape BuildRectangle(const sf::Vector2f& size, const sf::Color& unpressedColor, const sf::Color& borderColor, const float& borderThickness, const sf::Vector2f& position);
 
 	IButton::IButton() {}
@@ -27,12 +28,12 @@ namespace Menu
 		, onReleasedUp_(releaseSM)
 	{
 		_buttonBody = BuildRectangle(config.ButtonSize, config.UnpressedColor, config.BorderColor, config.ButtonBorderThickness, position);
-		_buttonText = BuildText(config.Text, config.TextStyle, _buttonBody.getLocalBounds(), position);
+		_buttonText = BuildText(config.Text, config, _buttonBody.getLocalBounds(), position);
 	}
 
 	ButtonImpl::~ButtonImpl() {}
 
-	void ButtonImpl::Draw(sf::RenderTarget* window) const
+	void ButtonImpl::Draw(sf::RenderTarget* window)
 	{
 		window->draw(_buttonBody);
 		window->draw(_buttonText);
@@ -70,13 +71,13 @@ namespace Menu
 		return onReleasedUp_->Subscribe(handler);
 	}
 
-	sf::Text BuildText(const std::string& text, const TextStyle& style, const sf::FloatRect& containerSize, const sf::Vector2f& overallPosition)
+	sf::Text BuildText(const std::string& text, const ButtonStyle& style, const sf::FloatRect& containerSize, const sf::Vector2f& overallPosition)
 	{
-		sf::Text sfText(text, style.Font, style.FontSize);
+		sf::Text sfText(text, style.TextStyle.Font, style.TextStyle.FontSize);
 		const auto globalBounds = sfText.getGlobalBounds();
-		const auto textPos = GetTextPosition(containerSize, globalBounds, style.Padding, style.HorizAlign, style.VertAlign, overallPosition);
+		const auto textPos = GetTextPosition(containerSize, globalBounds, style.TextHorizontalAlignment, style.TextVerticalAlignment, overallPosition);
 		sfText.setPosition(textPos);
-		sfText.setFillColor(style.Color);
+		sfText.setFillColor(style.TextStyle.Color);
 
 		return sfText;
 	}

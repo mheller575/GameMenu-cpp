@@ -3,23 +3,23 @@
 
 namespace Menu
 {
-	sf::Vector2f GetTextPosition(const sf::FloatRect& containerSize, const sf::FloatRect& textSize, const Padding& textPadding,
-		const HorizontalAlignment& horizontal, const VerticalAlignment& vertical, const sf::Vector2f& overallPosition)
+	sf::Vector2f GetTextPosition(const sf::FloatRect& containerSize, const sf::FloatRect& textSize,	const HorizontalAlignment& horizontal, 
+		const VerticalAlignment& vertical, const sf::Vector2f& overallPosition)
 	{
-		float y = textPadding.Top;
+		float y = 0.0;
 		if (vertical == VerticalAlignment::Bottom)
 		{
-			y = containerSize.height - (textPadding.Bottom + textSize.height);
+			y = containerSize.height - textSize.height;
 		}
 		else if (vertical == VerticalAlignment::Center)
 		{
 			y = ((containerSize.height - textSize.height) / 2.0) - 8.0;
 		}
 
-		float x = textPadding.Left;
+		float x = 0.0;
 		if (horizontal == HorizontalAlignment::Right)
 		{
-			x = containerSize.width - (textSize.width + textPadding.Right);
+			x = containerSize.width - textSize.width;
 		}
 		else if (horizontal == HorizontalAlignment::Center)
 		{
