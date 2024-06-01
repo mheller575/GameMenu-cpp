@@ -25,14 +25,10 @@ namespace Menu
 		virtual void Close() override;
 
 	private:
-		std::uint64_t GetCurrentTime_ms();
-
-		const std::uint32_t screenUpdateRate_ms_;
-		bool notifyThreadClose_ = false;
-		std::thread displayThread_;
-		std::thread controlThread_;
+		const std::uint64_t screenUpdateRate_ms_;
 		sf::RenderWindow* window_;
 		std::vector<std::shared_ptr<IControl>> controls_;
+		bool notifyThreadClose_ = false;
 
 		ScreenImpl(const ScreenImpl&) = delete;
 		ScreenImpl& operator=(const ScreenImpl&) = delete;

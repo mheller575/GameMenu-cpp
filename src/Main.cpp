@@ -8,6 +8,7 @@
 
 #include "ScreenImpl.h"
 #include "ButtonImpl.h"
+#include "TextBoxImpl.h"
 #include "ILogger.h"
 #include "SFMLHelpers.h"
 
@@ -56,6 +57,17 @@ int main()
 
 	const auto textLabel = BuildTextLabel("Labeled!", textLabelLocation, textLabelStyle);
 
+	TextBoxStyle textBoxStyle;
+	textBoxStyle.BackgroundColor = sf::Color::White;
+	textBoxStyle.BorderColor = sf::Color::Red;
+	textBoxStyle.BorderThickness = 2;
+	textBoxStyle.TextBoxSize = sf::Vector2f(120, 60);
+	textBoxStyle.TextStyle.Color = sf::Color::Black;
+	textBoxStyle.TextStyle.Font.loadFromFile("C:\\gitrepo\\GameMenu-cpp\\build\\Debug\\sansation.ttf");
+	textBoxStyle.TextStyle.FontSize = 18;
+
+	const auto textbox = BuildTextBox("", textBoxStyle, sf::Vector2f(300, 20));
+
 	auto logger = BuildLogger();
 
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Sample Menu Example", sf::Style::Close);
@@ -64,6 +76,7 @@ int main()
 	{
 		button,
 		textLabel,
+		textbox,
 	};
 
 	ScreenImpl screen(&window, controls, screenUpdateRate_ms);

@@ -1,10 +1,10 @@
-
 #include <chrono>
 #include <functional>
 
 #include "IControl.h"
 
 #include "ScreenImpl.h"
+#include "TimeHelpers.h"
 
 namespace Menu
 {
@@ -26,9 +26,9 @@ namespace Menu
 	void ScreenImpl::Open()
 	{
 		auto lastDrawTime_ms = 0; // Set to 0 so we draw on first pass through.
-		while (window_->isOpen())
+		while (window_->isOpen() && !notifyThreadClose_)
 		{
-			const auto currentTime_ms = GetCurrentTime_ms();
+			const auto currentTime_ms = GetCurrentTimeSinceEpoch_ms();
 
 			if (currentTime_ms - lastDrawTime_ms > screenUpdateRate_ms_)
 			{
@@ -43,7 +43,7 @@ namespace Menu
 				// Tell the window to display.
 				window_->display();
 
-				lastDrawTime_ms = GetCurrentTime_ms();
+				lastDrawTime_ms = GetCurrentTimeSinceEpoch_ms();
 			}
 
 			// Poll the events from the window.
@@ -53,7 +53,7 @@ namespace Menu
 				// Handle the closed event here, but pass all other events to the contained controls.
 				if (windowEvent.type == sf::Event::Closed)
 				{
-					window_->close();
+					notifyThreadClose_ = true;
 				}
 				else
 				{
@@ -64,16 +64,12 @@ namespace Menu
 				}
 			}
 		}
+
+		window_->clear();
 	}
 
 	void ScreenImpl::Close()
 	{
 		notifyThreadClose_ = true;
-	}
-
-	std::uint64_t ScreenImpl::GetCurrentTime_ms()
-	{
-		return std::chrono::duration_cast<std::chrono::milliseconds>(
-			std::chrono::high_resolution_clock::now().time_since_epoch()).count();
 	}
 }

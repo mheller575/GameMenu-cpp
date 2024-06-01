@@ -14,16 +14,16 @@ namespace Menu
 		void HandleEvent(const sf::Event& event, sf::RenderTarget* window) override;
 
 	private:
-		const std::string CursorCharacter = "|";
+		const std::uint64_t _cursorFlashRate_ms = 400;
 
-		//std::shared_ptr<ILogger> logger_;
 		TextBoxStyle _style;
-		std::string _textString;
 		sf::Text _text;
-		sf::RectangleShape _rectangle;
+		sf::RectangleShape _textBoxBackground;
+		sf::RectangleShape _cursor;
 
+		std::string _textString;
 		bool _selected = false;
-		std::uint32_t _cursorPosition;
-		std::uint32_t _firstVisibleCharacterIndex = 0;
+		std::uint64_t _lastCursorStateChangeTime_ms = 0;
+		bool _showCursor = false;
 	};
 }
